@@ -1,13 +1,23 @@
 const axios = require('axios');
 const config = require('../config/config');
+const mockFacebookAPI = require('./mockFacebookAPI');
 
 class FacebookMarketingAPI {
   constructor() {
     this.baseURL = `https://graph.facebook.com/${config.facebook.apiVersion}`;
     this.accessToken = config.facebook.accessToken;
+    this.mockupMode = config.facebook.mockupMode || false;
+
+    if (this.mockupMode) {
+      console.log('🎭 MOCKUP MODE ENABLED - Using simulated Facebook API responses');
+    }
   }
 
   async createCampaign(adAccountId, campaignData) {
+    if (this.mockupMode) {
+      return mockFacebookAPI.createCampaign(campaignData);
+    }
+
     try {
       const response = await axios.post(
         `${this.baseURL}/act_${adAccountId}/campaigns`,
@@ -28,6 +38,10 @@ class FacebookMarketingAPI {
   }
 
   async createAdSet(adAccountId, adSetData) {
+    if (this.mockupMode) {
+      return mockFacebookAPI.createAdSet(adSetData);
+    }
+
     try {
       const response = await axios.post(
         `${this.baseURL}/act_${adAccountId}/adsets`,
@@ -52,6 +66,10 @@ class FacebookMarketingAPI {
   }
 
   async createCreative(adAccountId, creativeData) {
+    if (this.mockupMode) {
+      return mockFacebookAPI.createCreative(creativeData);
+    }
+
     try {
       const response = await axios.post(
         `${this.baseURL}/act_${adAccountId}/adcreatives`,
@@ -68,6 +86,10 @@ class FacebookMarketingAPI {
   }
 
   async createAd(adAccountId, adData) {
+    if (this.mockupMode) {
+      return mockFacebookAPI.createAd(adData);
+    }
+
     try {
       const response = await axios.post(
         `${this.baseURL}/act_${adAccountId}/ads`,
@@ -86,6 +108,10 @@ class FacebookMarketingAPI {
   }
 
   async updateCampaignStatus(campaignId, status) {
+    if (this.mockupMode) {
+      return mockFacebookAPI.updateCampaignStatus(campaignId, status);
+    }
+
     try {
       const response = await axios.post(
         `${this.baseURL}/${campaignId}`,
@@ -101,6 +127,10 @@ class FacebookMarketingAPI {
   }
 
   async getCampaignInsights(campaignId, datePreset = 'last_7d') {
+    if (this.mockupMode) {
+      return mockFacebookAPI.getCampaignInsights(campaignId);
+    }
+
     try {
       const response = await axios.get(
         `${this.baseURL}/${campaignId}/insights`,
@@ -119,6 +149,10 @@ class FacebookMarketingAPI {
   }
 
   async getAdSetInsights(adSetId, datePreset = 'last_7d') {
+    if (this.mockupMode) {
+      return mockFacebookAPI.getAdSetInsights(adSetId);
+    }
+
     try {
       const response = await axios.get(
         `${this.baseURL}/${adSetId}/insights`,
@@ -137,6 +171,10 @@ class FacebookMarketingAPI {
   }
 
   async batchCreate(adAccountId, batchRequests) {
+    if (this.mockupMode) {
+      return mockFacebookAPI.batchCreateCampaigns(batchRequests);
+    }
+
     try {
       const response = await axios.post(
         `${this.baseURL}`,

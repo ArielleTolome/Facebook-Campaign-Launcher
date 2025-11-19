@@ -5,7 +5,8 @@ module.exports = {
     appId: process.env.FB_APP_ID,
     appSecret: process.env.FB_APP_SECRET,
     accessToken: process.env.FB_ACCESS_TOKEN,
-    apiVersion: process.env.FB_API_VERSION || 'v18.0'
+    apiVersion: process.env.FB_API_VERSION || 'v18.0',
+    mockupMode: process.env.FB_MOCKUP_MODE === 'true' || false
   },
   rateLimit: {
     windowMs: 15 * 60 * 1000, // 15 minutes

@@ -2,6 +2,22 @@
 
 A comprehensive Facebook Campaign Launcher for affiliate marketing, built with React, Node.js, and PostgreSQL.
 
+## 🎭 Quick Deploy - Mockup Mode
+
+**Want to see it live right away?** Deploy the fully functional mockup version in 5 minutes - **no Facebook API credentials required**!
+
+```bash
+docker-compose up -d
+docker-compose exec backend npm run seed
+# Visit http://localhost:3000
+```
+
+The mockup mode uses simulated Facebook API responses with realistic data, perfect for demos, testing, and development.
+
+👉 **[Complete Mockup Deployment Guide →](MOCKUP_DEPLOY.md)**
+
+---
+
 ## Features
 
 - **Bulk Campaign Creation**: Create multiple campaigns simultaneously
