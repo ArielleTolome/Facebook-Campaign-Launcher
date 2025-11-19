@@ -3,6 +3,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
+const axios = require('axios');
 require('dotenv').config();
 
 const config = require('./config/config');
@@ -24,6 +25,25 @@ app.use('/api/', limiter);
 
 // Routes
 app.use('/api', routes);
+
+app.get('/health', async (req, res) => {
+  try {
+    await sequelize.authenticate();
+    const facebookApiStatus = await checkFacebookApiStatus();
+    res.status(200).json({ status: 'ok', database: 'connected', facebookApi: facebookApiStatus });
+  } catch (error) {
+    res.status(500).json({ status: 'error', database: 'disconnected', facebookApi: 'disconnected', error: error.message });
+  }
+});
+
+async function checkFacebookApiStatus() {
+  try {
+    await axios.get(`https://graph.facebook.com/${config.facebook.apiVersion}/?access_token=${config.facebook.accessToken}`);
+    return 'connected';
+  } catch (error) {
+    return 'disconnected';
+  }
+}
 
 // Error handling middleware
 app.use((err, req, res, next) => {
