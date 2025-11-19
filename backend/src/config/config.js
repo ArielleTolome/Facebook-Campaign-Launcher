@@ -10,5 +10,9 @@ module.exports = {
   rateLimit: {
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 100 // limit each IP to 100 requests per windowMs
+  },
+  redis: {
+    host: process.env.REDIS_HOST || '127.0.0.1',
+    port: process.env.REDIS_PORT || 6379,
   }
 };
