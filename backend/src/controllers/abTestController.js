@@ -3,7 +3,7 @@ const abTestService = require('../services/abTestService');
 class ABTestController {
   async createABTest(req, res) {
     try {
-      const abTest = await abTestService.createABTest(req.body);
+      const abTest = await abTestService.createABTest(req.body, req.adAccountId);
       res.status(201).json({
         success: true,
         data: abTest
@@ -18,7 +18,7 @@ class ABTestController {
 
   async getABTests(req, res) {
     try {
-      const abTests = await abTestService.getAllABTests(req.query);
+      const abTests = await abTestService.getAllABTests(req.adAccountId, req.query);
       res.json({
         success: true,
         data: abTests
@@ -33,7 +33,7 @@ class ABTestController {
 
   async getABTestById(req, res) {
     try {
-      const abTest = await abTestService.getABTestById(req.params.id);
+      const abTest = await abTestService.getABTestById(req.params.id, req.adAccountId);
       res.json({
         success: true,
         data: abTest
@@ -48,7 +48,7 @@ class ABTestController {
 
   async updateABTest(req, res) {
     try {
-      const abTest = await abTestService.updateABTest(req.params.id, req.body);
+      const abTest = await abTestService.updateABTest(req.params.id, req.adAccountId, req.body);
       res.json({
         success: true,
         data: abTest
@@ -63,7 +63,7 @@ class ABTestController {
 
   async startABTest(req, res) {
     try {
-      const abTest = await abTestService.startABTest(req.params.id);
+      const abTest = await abTestService.startABTest(req.params.id, req.adAccountId);
       res.json({
         success: true,
         data: abTest
@@ -78,7 +78,7 @@ class ABTestController {
 
   async completeABTest(req, res) {
     try {
-      const abTest = await abTestService.completeABTest(req.params.id, req.body.results);
+      const abTest = await abTestService.completeABTest(req.params.id, req.adAccountId, req.body.results);
       res.json({
         success: true,
         data: abTest
@@ -93,7 +93,7 @@ class ABTestController {
 
   async analyzeResults(req, res) {
     try {
-      const analysis = await abTestService.analyzeResults(req.params.id);
+      const analysis = await abTestService.analyzeResults(req.params.id, req.adAccountId);
       res.json({
         success: true,
         data: analysis

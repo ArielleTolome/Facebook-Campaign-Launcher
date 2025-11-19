@@ -52,11 +52,25 @@ const Campaign = sequelize.define('Campaign', {
   metadata: {
     type: DataTypes.JSONB,
     defaultValue: {}
+  },
+  adAccountId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'AdAccounts',
+      key: 'id'
+    }
   }
 }, {
   tableName: 'campaigns',
   timestamps: true,
   underscored: true
 });
+
+Campaign.associate = function(models) {
+  Campaign.belongsTo(models.AdAccount, { foreignKey: 'adAccountId', as: 'adAccount' });
+  Campaign.hasMany(models.AdSet, { foreignKey: 'campaign_id', as: 'adSets' });
+  Campaign.hasMany(models.ABTest, { foreignKey: 'campaign_id', as: 'abTests' });
+};
 
 module.exports = Campaign;

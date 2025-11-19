@@ -3,7 +3,7 @@ const creativeService = require('../services/creativeService');
 class CreativeController {
   async createCreative(req, res) {
     try {
-      const { adAccountId } = req.query;
+      const { adAccountId } = req;
       const creative = await creativeService.createCreative(req.body, adAccountId);
       res.status(201).json({
         success: true,
@@ -19,7 +19,7 @@ class CreativeController {
 
   async bulkCreateCreatives(req, res) {
     try {
-      const { adAccountId } = req.query;
+      const { adAccountId } = req;
       const { creatives } = req.body;
 
       if (!Array.isArray(creatives)) {
@@ -44,7 +44,7 @@ class CreativeController {
 
   async getCreatives(req, res) {
     try {
-      const creatives = await creativeService.getAllCreatives(req.query);
+      const creatives = await creativeService.getAllCreatives(req.adAccountId, req.query);
       res.json({
         success: true,
         data: creatives
@@ -59,7 +59,7 @@ class CreativeController {
 
   async getCreativeById(req, res) {
     try {
-      const creative = await creativeService.getCreativeById(req.params.id);
+      const creative = await creativeService.getCreativeById(req.params.id, req.adAccountId);
       res.json({
         success: true,
         data: creative
@@ -74,7 +74,7 @@ class CreativeController {
 
   async updateCreative(req, res) {
     try {
-      const creative = await creativeService.updateCreative(req.params.id, req.body);
+      const creative = await creativeService.updateCreative(req.params.id, req.adAccountId, req.body);
       res.json({
         success: true,
         data: creative
@@ -89,7 +89,7 @@ class CreativeController {
 
   async deleteCreative(req, res) {
     try {
-      const result = await creativeService.deleteCreative(req.params.id);
+      const result = await creativeService.deleteCreative(req.params.id, req.adAccountId);
       res.json({
         success: true,
         data: result

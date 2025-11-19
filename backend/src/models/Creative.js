@@ -48,11 +48,24 @@ const Creative = sequelize.define('Creative', {
   status: {
     type: DataTypes.ENUM('ACTIVE', 'ARCHIVED'),
     defaultValue: 'ACTIVE'
+  },
+  adAccountId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'AdAccounts',
+      key: 'id'
+    }
   }
 }, {
   tableName: 'creatives',
   timestamps: true,
   underscored: true
 });
+
+Creative.associate = function(models) {
+  Creative.belongsTo(models.AdAccount, { foreignKey: 'adAccountId', as: 'adAccount' });
+  Creative.hasMany(models.Ad, { foreignKey: 'creative_id', as: 'ads' });
+};
 
 module.exports = Creative;

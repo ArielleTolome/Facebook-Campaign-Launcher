@@ -1,28 +1,34 @@
-const sequelize = require('../config/database');
-const Campaign = require('./Campaign');
-const AdSet = require('./AdSet');
-const Ad = require('./Ad');
-const Creative = require('./Creative');
-const ABTest = require('./ABTest');
+const fs = require('fs');
+const path = require('path');
+const Sequelize = require('sequelize');
+const basename = path.basename(__filename);
+const config = require(__dirname + '/../config/config.js');
+const db = {};
 
-// Define associations
-Campaign.hasMany(AdSet, { foreignKey: 'campaign_id', as: 'adSets' });
-AdSet.belongsTo(Campaign, { foreignKey: 'campaign_id', as: 'campaign' });
+let sequelize;
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+} else {
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
+}
 
-AdSet.hasMany(Ad, { foreignKey: 'ad_set_id', as: 'ads' });
-Ad.belongsTo(AdSet, { foreignKey: 'ad_set_id', as: 'adSet' });
+fs
+  .readdirSync(__dirname)
+  .filter(file => {
+    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
+  })
+  .forEach(file => {
+    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
+    db[model.name] = model;
+  });
 
-Creative.hasMany(Ad, { foreignKey: 'creative_id', as: 'ads' });
-Ad.belongsTo(Creative, { foreignKey: 'creative_id', as: 'creative' });
+Object.keys(db).forEach(modelName => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
 
-Campaign.hasMany(ABTest, { foreignKey: 'campaign_id', as: 'abTests' });
-ABTest.belongsTo(Campaign, { foreignKey: 'campaign_id', as: 'campaign' });
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
 
-module.exports = {
-  sequelize,
-  Campaign,
-  AdSet,
-  Ad,
-  Creative,
-  ABTest
-};
+module.exports = db;

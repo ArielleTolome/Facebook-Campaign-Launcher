@@ -45,11 +45,24 @@ const ABTest = sequelize.define('ABTest', {
   endDate: {
     type: DataTypes.DATE,
     field: 'end_date'
+  },
+  adAccountId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'AdAccounts',
+      key: 'id'
+    }
   }
 }, {
   tableName: 'ab_tests',
   timestamps: true,
   underscored: true
 });
+
+ABTest.associate = function(models) {
+  ABTest.belongsTo(models.AdAccount, { foreignKey: 'adAccountId', as: 'adAccount' });
+  ABTest.belongsTo(models.Campaign, { foreignKey: 'campaign_id', as: 'campaign' });
+};
 
 module.exports = ABTest;

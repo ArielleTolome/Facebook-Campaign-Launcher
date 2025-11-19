@@ -5,7 +5,7 @@ class CampaignService {
   async createCampaign(campaignData, adAccountId) {
     try {
       // Create campaign in database
-      const campaign = await Campaign.create(campaignData);
+      const campaign = await Campaign.create({ ...campaignData, adAccountId });
 
       // If not a template and adAccountId provided, create in Facebook
       if (!campaignData.isTemplate && adAccountId) {
@@ -52,9 +52,10 @@ class CampaignService {
     }
   }
 
-  async getCampaignById(id) {
+  async getCampaignById(id, adAccountId) {
     try {
-      const campaign = await Campaign.findByPk(id, {
+      const campaign = await Campaign.findOne({
+        where: { id, adAccountId },
         include: [
           {
             association: 'adSets',
@@ -79,9 +80,9 @@ class CampaignService {
     }
   }
 
-  async getAllCampaigns(filters = {}) {
+  async getAllCampaigns(adAccountId, filters = {}) {
     try {
-      const where = {};
+      const where = { adAccountId };
 
       if (filters.status) {
         where.status = filters.status;
@@ -103,9 +104,9 @@ class CampaignService {
     }
   }
 
-  async updateCampaign(id, updateData) {
+  async updateCampaign(id, adAccountId, updateData) {
     try {
-      const campaign = await Campaign.findByPk(id);
+      const campaign = await Campaign.findOne({ where: { id, adAccountId } });
 
       if (!campaign) {
         throw new Error('Campaign not found');
@@ -125,9 +126,9 @@ class CampaignService {
     }
   }
 
-  async deleteCampaign(id) {
+  async deleteCampaign(id, adAccountId) {
     try {
-      const campaign = await Campaign.findByPk(id);
+      const campaign = await Campaign.findOne({ where: { id, adAccountId } });
 
       if (!campaign) {
         throw new Error('Campaign not found');
@@ -148,7 +149,7 @@ class CampaignService {
 
   async createFromTemplate(templateId, customData, adAccountId) {
     try {
-      const template = await Campaign.findByPk(templateId);
+      const template = await Campaign.findOne({ where: { id: templateId, adAccountId } });
 
       if (!template || !template.isTemplate) {
         throw new Error('Template not found');

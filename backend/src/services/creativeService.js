@@ -5,7 +5,7 @@ class CreativeService {
   async createCreative(creativeData, adAccountId) {
     try {
       // Create creative in database
-      const creative = await Creative.create(creativeData);
+      const creative = await Creative.create({ ...creativeData, adAccountId });
 
       // If adAccountId provided, create in Facebook
       if (adAccountId) {
@@ -35,9 +35,9 @@ class CreativeService {
     }
   }
 
-  async getAllCreatives(filters = {}) {
+  async getAllCreatives(adAccountId, filters = {}) {
     try {
-      const where = {};
+      const where = { adAccountId };
 
       if (filters.status) {
         where.status = filters.status;
@@ -58,9 +58,10 @@ class CreativeService {
     }
   }
 
-  async getCreativeById(id) {
+  async getCreativeById(id, adAccountId) {
     try {
-      const creative = await Creative.findByPk(id, {
+      const creative = await Creative.findOne({
+        where: { id, adAccountId },
         include: ['ads']
       });
 
@@ -74,9 +75,9 @@ class CreativeService {
     }
   }
 
-  async updateCreative(id, updateData) {
+  async updateCreative(id, adAccountId, updateData) {
     try {
-      const creative = await Creative.findByPk(id);
+      const creative = await Creative.findOne({ where: { id, adAccountId } });
 
       if (!creative) {
         throw new Error('Creative not found');
@@ -89,9 +90,9 @@ class CreativeService {
     }
   }
 
-  async deleteCreative(id) {
+  async deleteCreative(id, adAccountId) {
     try {
-      const creative = await Creative.findByPk(id);
+      const creative = await Creative.findOne({ where: { id, adAccountId } });
 
       if (!creative) {
         throw new Error('Creative not found');

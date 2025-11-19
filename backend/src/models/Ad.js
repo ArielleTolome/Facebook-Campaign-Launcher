@@ -36,4 +36,9 @@ const Ad = sequelize.define('Ad', {
   underscored: true
 });
 
+Ad.associate = function(models) {
+  Ad.belongsTo(models.AdSet, { foreignKey: 'ad_set_id', as: 'adSet' });
+  Ad.belongsTo(models.Creative, { foreignKey: 'creative_id', as: 'creative' });
+};
+
 module.exports = Ad;

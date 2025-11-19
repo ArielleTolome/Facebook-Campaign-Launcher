@@ -1,24 +1,25 @@
 const { ABTest, Campaign, AdSet } = require('../models');
 
 class ABTestService {
-  async createABTest(testData) {
+  async createABTest(testData, adAccountId) {
     try {
-      const campaign = await Campaign.findByPk(testData.campaignId);
+      const campaign = await Campaign.findOne({ where: { id: testData.campaignId, adAccountId } });
 
       if (!campaign) {
         throw new Error('Campaign not found');
       }
 
-      const abTest = await ABTest.create(testData);
+      const abTest = await ABTest.create({ ...testData, adAccountId });
       return abTest;
     } catch (error) {
       throw error;
     }
   }
 
-  async getABTestById(id) {
+  async getABTestById(id, adAccountId) {
     try {
-      const abTest = await ABTest.findByPk(id, {
+      const abTest = await ABTest.findOne({
+        where: { id, adAccountId },
         include: ['campaign']
       });
 
@@ -32,9 +33,9 @@ class ABTestService {
     }
   }
 
-  async getAllABTests(filters = {}) {
+  async getAllABTests(adAccountId, filters = {}) {
     try {
-      const where = {};
+      const where = { adAccountId };
 
       if (filters.campaignId) {
         where.campaignId = filters.campaignId;
@@ -60,9 +61,9 @@ class ABTestService {
     }
   }
 
-  async updateABTest(id, updateData) {
+  async updateABTest(id, adAccountId, updateData) {
     try {
-      const abTest = await ABTest.findByPk(id);
+      const abTest = await ABTest.findOne({ where: { id, adAccountId } });
 
       if (!abTest) {
         throw new Error('A/B Test not found');
@@ -75,9 +76,9 @@ class ABTestService {
     }
   }
 
-  async startABTest(id) {
+  async startABTest(id, adAccountId) {
     try {
-      const abTest = await ABTest.findByPk(id);
+      const abTest = await ABTest.findOne({ where: { id, adAccountId } });
 
       if (!abTest) {
         throw new Error('A/B Test not found');
@@ -98,9 +99,9 @@ class ABTestService {
     }
   }
 
-  async completeABTest(id, results) {
+  async completeABTest(id, adAccountId, results) {
     try {
-      const abTest = await ABTest.findByPk(id);
+      const abTest = await ABTest.findOne({ where: { id, adAccountId } });
 
       if (!abTest) {
         throw new Error('A/B Test not found');
@@ -118,9 +119,9 @@ class ABTestService {
     }
   }
 
-  async analyzeResults(id) {
+  async analyzeResults(id, adAccountId) {
     try {
-      const abTest = await ABTest.findByPk(id);
+      const abTest = await ABTest.findOne({ where: { id, adAccountId } });
 
       if (!abTest) {
         throw new Error('A/B Test not found');

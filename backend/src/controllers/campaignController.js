@@ -3,7 +3,7 @@ const campaignService = require('../services/campaignService');
 class CampaignController {
   async createCampaign(req, res) {
     try {
-      const { adAccountId } = req.query;
+      const { adAccountId } = req;
       const campaign = await campaignService.createCampaign(req.body, adAccountId);
       res.status(201).json({
         success: true,
@@ -19,7 +19,7 @@ class CampaignController {
 
   async bulkCreateCampaigns(req, res) {
     try {
-      const { adAccountId } = req.query;
+      const { adAccountId } = req;
       const { campaigns } = req.body;
 
       if (!Array.isArray(campaigns)) {
@@ -44,7 +44,7 @@ class CampaignController {
 
   async getCampaigns(req, res) {
     try {
-      const campaigns = await campaignService.getAllCampaigns(req.query);
+      const campaigns = await campaignService.getAllCampaigns(req.adAccountId, req.query);
       res.json({
         success: true,
         data: campaigns
@@ -59,7 +59,7 @@ class CampaignController {
 
   async getCampaignById(req, res) {
     try {
-      const campaign = await campaignService.getCampaignById(req.params.id);
+      const campaign = await campaignService.getCampaignById(req.params.id, req.adAccountId);
       res.json({
         success: true,
         data: campaign
@@ -74,7 +74,7 @@ class CampaignController {
 
   async updateCampaign(req, res) {
     try {
-      const campaign = await campaignService.updateCampaign(req.params.id, req.body);
+      const campaign = await campaignService.updateCampaign(req.params.id, req.adAccountId, req.body);
       res.json({
         success: true,
         data: campaign
@@ -89,7 +89,7 @@ class CampaignController {
 
   async deleteCampaign(req, res) {
     try {
-      const result = await campaignService.deleteCampaign(req.params.id);
+      const result = await campaignService.deleteCampaign(req.params.id, req.adAccountId);
       res.json({
         success: true,
         data: result
@@ -105,7 +105,7 @@ class CampaignController {
   async createFromTemplate(req, res) {
     try {
       const { templateId } = req.params;
-      const { adAccountId } = req.query;
+      const { adAccountId } = req;
       const campaign = await campaignService.createFromTemplate(
         templateId,
         req.body,
@@ -125,7 +125,7 @@ class CampaignController {
 
   async getCampaignInsights(req, res) {
     try {
-      const insights = await campaignService.getCampaignInsights(req.params.id);
+      const insights = await campaignService.getCampaignInsights(req.params.id, req.adAccountId);
       res.json({
         success: true,
         data: insights
