@@ -49,6 +49,10 @@ const Campaign = sequelize.define('Campaign', {
     defaultValue: false,
     field: 'is_template'
   },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
   metadata: {
     type: DataTypes.JSONB,
     defaultValue: {}

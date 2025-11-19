@@ -2,10 +2,10 @@ const { Campaign, AdSet, Ad, Creative } = require('../models');
 const facebookAPI = require('./facebookAPI');
 
 class CampaignService {
-  async createCampaign(campaignData, adAccountId) {
+  async createCampaign(campaignData, adAccountId, userId) {
     try {
       // Create campaign in database
-      const campaign = await Campaign.create(campaignData);
+      const campaign = await Campaign.create({ ...campaignData, userId });
 
       // If not a template and adAccountId provided, create in Facebook
       if (!campaignData.isTemplate && adAccountId) {
@@ -103,12 +103,16 @@ class CampaignService {
     }
   }
 
-  async updateCampaign(id, updateData) {
+  async updateCampaign(id, updateData, user) {
     try {
       const campaign = await Campaign.findByPk(id);
 
       if (!campaign) {
         throw new Error('Campaign not found');
+      }
+
+      if (user.role === 'Campaign Manager' && campaign.userId !== user.id) {
+        throw new Error('You are not authorized to update this campaign');
       }
 
       // Update in database
@@ -125,12 +129,16 @@ class CampaignService {
     }
   }
 
-  async deleteCampaign(id) {
+  async deleteCampaign(id, user) {
     try {
       const campaign = await Campaign.findByPk(id);
 
       if (!campaign) {
         throw new Error('Campaign not found');
+      }
+
+      if (user.role === 'Campaign Manager' && campaign.userId !== user.id) {
+        throw new Error('You are not authorized to delete this campaign');
       }
 
       // Soft delete - mark as deleted

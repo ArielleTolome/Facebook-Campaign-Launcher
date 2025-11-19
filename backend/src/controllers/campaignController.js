@@ -4,7 +4,7 @@ class CampaignController {
   async createCampaign(req, res) {
     try {
       const { adAccountId } = req.query;
-      const campaign = await campaignService.createCampaign(req.body, adAccountId);
+      const campaign = await campaignService.createCampaign(req.body, adAccountId, req.user.id);
       res.status(201).json({
         success: true,
         data: campaign
@@ -74,7 +74,7 @@ class CampaignController {
 
   async updateCampaign(req, res) {
     try {
-      const campaign = await campaignService.updateCampaign(req.params.id, req.body);
+      const campaign = await campaignService.updateCampaign(req.params.id, req.body, req.user);
       res.json({
         success: true,
         data: campaign
@@ -89,7 +89,7 @@ class CampaignController {
 
   async deleteCampaign(req, res) {
     try {
-      const result = await campaignService.deleteCampaign(req.params.id);
+      const result = await campaignService.deleteCampaign(req.params.id, req.user);
       res.json({
         success: true,
         data: result
