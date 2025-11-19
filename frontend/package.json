@@ -1,0 +1,40 @@
+{
+  "name": "facebook-campaign-launcher-frontend",
+  "version": "1.0.0",
+  "description": "Frontend for Facebook Campaign Launcher",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "react-router-dom": "^6.20.1",
+    "axios": "^1.6.2",
+    "recharts": "^2.10.3",
+    "react-query": "^3.39.3",
+    "formik": "^2.4.5",
+    "yup": "^1.3.3"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

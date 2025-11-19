@@ -1,0 +1,82 @@
+.ab-testing {
+  padding: 20px 0;
+}
+
+.ab-testing .header {
+  margin-bottom: 30px;
+}
+
+.ab-testing .header h1 {
+  font-size: 28px;
+  color: #333;
+}
+
+.tests-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.test-card {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  transition: box-shadow 0.2s;
+}
+
+.test-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.test-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 15px;
+}
+
+.test-header h3 {
+  font-size: 18px;
+  color: #333;
+  margin: 0;
+  flex: 1;
+}
+
+.status.draft {
+  background-color: #e0e0e0;
+  color: #666;
+}
+
+.status.running {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status.completed {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+.test-details {
+  margin: 15px 0;
+}
+
+.test-details p {
+  margin: 8px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.test-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.test-actions button {
+  flex: 1;
+  padding: 8px;
+  font-size: 13px;
+}
