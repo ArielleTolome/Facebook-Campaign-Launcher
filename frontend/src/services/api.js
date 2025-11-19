@@ -16,6 +16,8 @@ export const campaignAPI = {
   bulkCreate: (campaigns, adAccountId) => apiClient.post(`/campaigns/bulk?adAccountId=${adAccountId}`, { campaigns }),
   update: (id, data) => apiClient.put(`/campaigns/${id}`, data),
   delete: (id) => apiClient.delete(`/campaigns/${id}`),
+  bulkUpdate: (ids, data) => apiClient.put('/campaigns/bulk/update', { ids, data }),
+  bulkDelete: (ids) => apiClient.post('/campaigns/bulk/delete', { ids }),
   createFromTemplate: (templateId, data, adAccountId) => 
     apiClient.post(`/campaigns/templates/${templateId}/create?adAccountId=${adAccountId}`, data),
   getInsights: (id) => apiClient.get(`/campaigns/${id}/insights`),
