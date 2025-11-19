@@ -1,4 +1,4 @@
-const { sequelize, Campaign, Creative, ABTest } = require('./models');
+const { sequelize, Campaign, Creative, ABTest, Audience, AudienceTemplate } = require('./models');
 
 async function seedDatabase() {
   try {
@@ -145,12 +145,137 @@ async function seedDatabase() {
 
     console.log('Created 1 sample A/B test');
 
+    // Create audience templates
+    console.log('Creating audience templates...');
+    const audienceTemplate1 = await AudienceTemplate.create({
+      name: 'Young Adults - Tech Enthusiasts',
+      description: 'Target young adults interested in technology and gadgets',
+      category: 'Demographics + Interests',
+      type: 'SAVED',
+      targeting: {
+        age_min: 18,
+        age_max: 34,
+        genders: [1, 2],
+        interests: [
+          { id: '6003139266461', name: 'Technology' },
+          { id: '6003020834693', name: 'Gadgets' }
+        ],
+        behaviors: [
+          { id: '6015559470583', name: 'Early adopters' }
+        ]
+      },
+      configurableFields: ['age_min', 'age_max', 'geo_locations'],
+      defaultValues: {
+        geo_locations: { countries: ['US'] }
+      },
+      isPublic: true,
+      tags: ['technology', 'young-adults', 'early-adopters']
+    });
+
+    const audienceTemplate2 = await AudienceTemplate.create({
+      name: 'E-commerce Shoppers',
+      description: 'People who frequently shop online',
+      category: 'Behaviors',
+      type: 'SAVED',
+      targeting: {
+        age_min: 25,
+        age_max: 55,
+        behaviors: [
+          { id: '6002714895372', name: 'Online shoppers' },
+          { id: '6015235495383', name: 'Engaged shoppers' }
+        ]
+      },
+      configurableFields: ['age_min', 'age_max', 'geo_locations'],
+      defaultValues: {
+        geo_locations: { countries: ['US', 'CA', 'GB'] }
+      },
+      isPublic: true,
+      tags: ['ecommerce', 'shoppers', 'online']
+    });
+
+    const audienceTemplate3 = await AudienceTemplate.create({
+      name: 'Small Business Owners',
+      description: 'Target small business owners and entrepreneurs',
+      category: 'Business',
+      type: 'SAVED',
+      targeting: {
+        age_min: 25,
+        age_max: 65,
+        interests: [
+          { id: '6003195797498', name: 'Small business' },
+          { id: '6003348604581', name: 'Entrepreneurship' }
+        ],
+        work_positions: [
+          { id: '2', name: 'Owner' },
+          { id: '3', name: 'Partner' }
+        ]
+      },
+      configurableFields: ['age_min', 'age_max', 'geo_locations'],
+      defaultValues: {
+        geo_locations: { countries: ['US'] }
+      },
+      isPublic: true,
+      tags: ['business', 'entrepreneurs', 'b2b']
+    });
+
+    console.log('Created 3 audience templates');
+
+    // Create sample audiences
+    console.log('Creating sample audiences...');
+    await Audience.create({
+      name: 'Tech Enthusiasts 18-34 - US',
+      description: 'Young tech enthusiasts in the United States',
+      type: 'SAVED',
+      templateId: audienceTemplate1.id,
+      targeting: {
+        age_min: 18,
+        age_max: 34,
+        genders: [1, 2],
+        geo_locations: {
+          countries: ['US']
+        },
+        interests: [
+          { id: '6003139266461', name: 'Technology' },
+          { id: '6003020834693', name: 'Gadgets' }
+        ],
+        behaviors: [
+          { id: '6015559470583', name: 'Early adopters' }
+        ]
+      },
+      tags: ['technology', 'us', 'young-adults'],
+      status: 'ACTIVE'
+    });
+
+    await Audience.create({
+      name: 'Online Shoppers - North America',
+      description: 'Frequent online shoppers in US and Canada',
+      type: 'SAVED',
+      templateId: audienceTemplate2.id,
+      targeting: {
+        age_min: 25,
+        age_max: 55,
+        geo_locations: {
+          countries: ['US', 'CA']
+        },
+        behaviors: [
+          { id: '6002714895372', name: 'Online shoppers' },
+          { id: '6015235495383', name: 'Engaged shoppers' }
+        ]
+      },
+      tags: ['ecommerce', 'north-america', 'shoppers'],
+      status: 'ACTIVE'
+    });
+
+    console.log('Created 2 sample audiences');
+
     console.log('\n✅ Database seeded successfully!');
     console.log('\nSample data created:');
     console.log('- 3 Campaign Templates');
     console.log('- 5 Sample Creatives');
     console.log('- 1 Sample Campaign');
     console.log('- 1 Sample A/B Test');
+    console.log('- 3 Audience Templates');
+    console.log('- 2 Sample Audiences');
     console.log('\nYou can now start using the application!');
 
   } catch (error) {
