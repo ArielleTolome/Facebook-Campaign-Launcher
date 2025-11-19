@@ -1,0 +1,176 @@
+.audience-overlap-visualization {
+  padding: 24px;
+  background: white;
+  border-radius: 8px;
+}
+
+.overlap-loading,
+.overlap-error {
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 16px;
+}
+
+.overlap-loading {
+  color: #65676b;
+}
+
+.overlap-error {
+  color: #dc3545;
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 6px;
+}
+
+.overlap-info {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #e1e8ed;
+}
+
+.overlap-info h3 {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  color: #1c1e21;
+}
+
+.overlap-info p {
+  margin: 0;
+  color: #65676b;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.venn-diagram-container {
+  display: flex;
+  justify-content: center;
+  margin: 24px 0;
+  background: #f7f8fa;
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.venn-diagram-container svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.overlap-legend {
+  margin: 24px 0;
+  padding: 16px;
+  background: #f7f8fa;
+  border-radius: 6px;
+}
+
+.overlap-legend h4 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1c1e21;
+  text-transform: uppercase;
+}
+
+.legend-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.legend-item span {
+  font-size: 14px;
+  color: #1c1e21;
+  font-weight: 500;
+}
+
+.overlap-details {
+  margin-top: 24px;
+}
+
+.overlap-details h4 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1c1e21;
+}
+
+.overlap-table {
+  overflow-x: auto;
+}
+
+.overlap-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #e1e8ed;
+}
+
+.overlap-table thead {
+  background: #f7f8fa;
+}
+
+.overlap-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: #1c1e21;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #e1e8ed;
+}
+
+.overlap-table td {
+  padding: 12px 16px;
+  color: #1c1e21;
+  font-size: 14px;
+  border-bottom: 1px solid #e1e8ed;
+}
+
+.overlap-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.overlap-table tbody tr:hover {
+  background: #f7f8fa;
+}
+
+.overlap-table strong {
+  color: #1877f2;
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .venn-diagram-container svg {
+    width: 100%;
+    height: auto;
+  }
+
+  .legend-items {
+    flex-direction: column;
+  }
+
+  .overlap-table {
+    font-size: 12px;
+  }
+
+  .overlap-table th,
+  .overlap-table td {
+    padding: 8px 12px;
+  }
+}

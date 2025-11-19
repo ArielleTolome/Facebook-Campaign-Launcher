@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { campaignAPI } from '../services/api';
+import AudienceLibrary from './AudienceLibrary';
 import '../styles/CampaignForm.css';
 
 const CampaignForm = ({ onSuccess, onCancel }) => {
@@ -10,10 +11,13 @@ const CampaignForm = ({ onSuccess, onCancel }) => {
     lifetimeBudget: '',
     status: 'PAUSED',
     isTemplate: false,
+    audienceId: null,
   });
   const [adAccountId, setAdAccountId] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showAudienceSelector, setShowAudienceSelector] = useState(false);
+  const [selectedAudience, setSelectedAudience] = useState(null);
 
   const objectives = [
     'LINK_CLICKS',
@@ -55,11 +59,50 @@ const CampaignForm = ({ onSuccess, onCancel }) => {
     });
   };
 
+  const handleAudienceSelect = (audience) => {
+    setSelectedAudience(audience);
+    setFormData({
+      ...formData,
+      audienceId: audience.id,
+    });
+    setShowAudienceSelector(false);
+  };
+
+  const handleRemoveAudience = () => {
+    setSelectedAudience(null);
+    setFormData({
+      ...formData,
+      audienceId: null,
+    });
+  };
+
+  if (showAudienceSelector) {
+    return (
+      <div className="campaign-form">
+        <div className="audience-selector-header">
+          <h2>Select Audience</h2>
+          <button
+            type="button"
+            onClick={() => setShowAudienceSelector(false)}
+            className="back-btn"
+          >
+            Back to Campaign
+          </button>
+        </div>
+        <AudienceLibrary
+          selectionMode={true}
+          onAudienceSelect={handleAudienceSelect}
+          selectedAudienceId={selectedAudience?.id}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="campaign-form">
       <h2>Create New Campaign</h2>
       {error && <div className="error">{error}</div>}
-      
+
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="name">Campaign Name *</label>
@@ -140,6 +183,38 @@ const CampaignForm = ({ onSuccess, onCancel }) => {
             onChange={(e) => setAdAccountId(e.target.value)}
             placeholder="Optional - for Facebook sync"
           />
+        </div>
+
+        <div className="form-group">
+          <label>Target Audience</label>
+          {selectedAudience ? (
+            <div className="selected-audience-box">
+              <div className="audience-info">
+                <h4>{selectedAudience.name}</h4>
+                {selectedAudience.description && (
+                  <p>{selectedAudience.description}</p>
+                )}
+                <span className="audience-type-badge">
+                  {selectedAudience.audienceType || 'SAVED'}
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={handleRemoveAudience}
+                className="remove-audience-btn"
+              >
+                Remove
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setShowAudienceSelector(true)}
+              className="select-audience-btn"
+            >
+              Select Audience
+            </button>
+          )}
         </div>
 
         <div className="form-group checkbox">

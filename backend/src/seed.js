@@ -1,4 +1,4 @@
-const { sequelize, Campaign, Creative, ABTest } = require('./models');
+const { sequelize, Campaign, Creative, ABTest, Audience } = require('./models');
 
 async function seedDatabase() {
   try {
@@ -106,6 +106,163 @@ async function seedDatabase() {
 
     console.log('Created 5 sample creatives');
 
+    // Create sample audiences
+    console.log('Creating sample audiences...');
+    await Audience.create({
+      name: 'Tech-Savvy Millennials',
+      description: 'Young professionals interested in technology and innovation',
+      audienceType: 'SAVED',
+      status: 'ACTIVE',
+      targeting: {
+        age: { min: 25, max: 40 },
+        gender: 'ALL',
+        locations: [
+          { name: 'United States', id: 'US' },
+          { name: 'Canada', id: 'CA' }
+        ],
+        interests: [
+          { name: 'Technology', id: 'tech' },
+          { name: 'Business', id: 'business' }
+        ],
+        behaviors: [
+          { name: 'Early Adopters', id: 'early_adopters' },
+          { name: 'Online Shoppers', id: 'online_shoppers' }
+        ]
+      },
+      size: {
+        estimatedSize: {
+          min: 500000,
+          max: 1200000
+        }
+      },
+      metadata: {
+        tags: ['tech', 'millennials', 'professionals']
+      }
+    });
+
+    await Audience.create({
+      name: 'Fashion Enthusiasts',
+      description: 'People interested in fashion, style, and beauty',
+      audienceType: 'SAVED',
+      status: 'ACTIVE',
+      targeting: {
+        age: { min: 18, max: 35 },
+        gender: 'ALL',
+        locations: [
+          { name: 'United States', id: 'US' },
+          { name: 'United Kingdom', id: 'GB' },
+          { name: 'France', id: 'FR' }
+        ],
+        interests: [
+          { name: 'Fashion', id: 'fashion' }
+        ],
+        behaviors: [
+          { name: 'Online Shoppers', id: 'online_shoppers' }
+        ]
+      },
+      size: {
+        estimatedSize: {
+          min: 800000,
+          max: 1800000
+        }
+      },
+      metadata: {
+        tags: ['fashion', 'lifestyle', 'shopping']
+      }
+    });
+
+    await Audience.create({
+      name: 'Fitness & Health Conscious',
+      description: 'Audience interested in fitness, wellness, and healthy living',
+      audienceType: 'SAVED',
+      status: 'ACTIVE',
+      targeting: {
+        age: { min: 22, max: 50 },
+        gender: 'ALL',
+        locations: [
+          { name: 'United States', id: 'US' },
+          { name: 'Australia', id: 'AU' }
+        ],
+        interests: [
+          { name: 'Health & Fitness', id: 'fitness' }
+        ],
+        behaviors: [
+          { name: 'Mobile Users', id: 'mobile' }
+        ]
+      },
+      size: {
+        estimatedSize: {
+          min: 600000,
+          max: 1400000
+        }
+      },
+      metadata: {
+        tags: ['health', 'fitness', 'wellness']
+      }
+    });
+
+    await Audience.create({
+      name: 'Business Decision Makers',
+      description: 'Small business owners and executives',
+      audienceType: 'SAVED',
+      status: 'ACTIVE',
+      targeting: {
+        age: { min: 30, max: 60 },
+        gender: 'ALL',
+        locations: [
+          { name: 'United States', id: 'US' }
+        ],
+        interests: [
+          { name: 'Business', id: 'business' }
+        ],
+        behaviors: [
+          { name: 'Small Business Owners', id: 'small_biz' }
+        ]
+      },
+      size: {
+        estimatedSize: {
+          min: 200000,
+          max: 500000
+        }
+      },
+      metadata: {
+        tags: ['business', 'b2b', 'executives']
+      }
+    });
+
+    await Audience.create({
+      name: 'Travel Lovers',
+      description: 'Frequent travelers and adventure seekers',
+      audienceType: 'SAVED',
+      status: 'ACTIVE',
+      targeting: {
+        age: { min: 25, max: 55 },
+        gender: 'ALL',
+        locations: [
+          { name: 'United States', id: 'US' },
+          { name: 'United Kingdom', id: 'GB' },
+          { name: 'Germany', id: 'DE' }
+        ],
+        interests: [
+          { name: 'Travel', id: 'travel' }
+        ],
+        behaviors: [
+          { name: 'Frequent Travelers', id: 'travelers' }
+        ]
+      },
+      size: {
+        estimatedSize: {
+          min: 700000,
+          max: 1500000
+        }
+      },
+      metadata: {
+        tags: ['travel', 'adventure', 'lifestyle']
+      }
+    });
+
+    console.log('Created 5 sample audiences');
+
     // Create a sample campaign
     console.log('Creating sample campaigns...');
     const sampleCampaign = await Campaign.create({
@@ -149,6 +306,7 @@ async function seedDatabase() {
     console.log('\nSample data created:');
     console.log('- 3 Campaign Templates');
     console.log('- 5 Sample Creatives');
+    console.log('- 5 Sample Audiences');
     console.log('- 1 Sample Campaign');
     console.log('- 1 Sample A/B Test');
     console.log('\nYou can now start using the application!');

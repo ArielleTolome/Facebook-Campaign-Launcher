@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import DashboardPage from './pages/DashboardPage';
 import CampaignsPage from './pages/CampaignsPage';
 import CreativesPage from './pages/CreativesPage';
+import AudiencesPage from './pages/AudiencesPage';
 import ABTestingPage from './pages/ABTestingPage';
 import './App.css';
 
@@ -25,6 +26,9 @@ function App() {
               <Link to="/creatives">Creative Library</Link>
             </li>
             <li>
+              <Link to="/audiences">Audience Library</Link>
+            </li>
+            <li>
               <Link to="/ab-testing">A/B Testing</Link>
             </li>
           </ul>
@@ -35,6 +39,7 @@ function App() {
             <Route path="/" element={<DashboardPage />} />
             <Route path="/campaigns" element={<CampaignsPage />} />
             <Route path="/creatives" element={<CreativesPage />} />
+            <Route path="/audiences" element={<AudiencesPage />} />
             <Route path="/ab-testing" element={<ABTestingPage />} />
           </Routes>
         </main>

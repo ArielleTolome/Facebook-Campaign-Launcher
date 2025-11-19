@@ -40,4 +40,17 @@ export const abTestAPI = {
   analyze: (id) => apiClient.get(`/ab-tests/${id}/analyze`),
 };
 
+export const audienceAPI = {
+  getAll: (params) => apiClient.get('/audiences', { params }),
+  getById: (id) => apiClient.get(`/audiences/${id}`),
+  create: (data, adAccountId) => apiClient.post(`/audiences?adAccountId=${adAccountId}`, data),
+  bulkCreate: (audiences, adAccountId) => apiClient.post(`/audiences/bulk?adAccountId=${adAccountId}`, { audiences }),
+  update: (id, data) => apiClient.put(`/audiences/${id}`, data),
+  delete: (id) => apiClient.delete(`/audiences/${id}`),
+  estimateSize: (targeting, adAccountId) =>
+    apiClient.post(`/audiences/estimate-size?adAccountId=${adAccountId}`, { targeting }),
+  analyzeOverlap: (audienceIds) =>
+    apiClient.post('/audiences/analyze-overlap', { audienceIds }),
+};
+
 export default apiClient;

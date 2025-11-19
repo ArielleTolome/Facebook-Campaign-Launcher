@@ -4,10 +4,12 @@ const router = express.Router();
 const campaignRoutes = require('./campaigns');
 const creativeRoutes = require('./creatives');
 const abTestRoutes = require('./abTests');
+const audienceRoutes = require('./audiences');
 
 router.use('/campaigns', campaignRoutes);
 router.use('/creatives', creativeRoutes);
 router.use('/ab-tests', abTestRoutes);
+router.use('/audiences', audienceRoutes);
 
 // Health check
 router.get('/health', (req, res) => {

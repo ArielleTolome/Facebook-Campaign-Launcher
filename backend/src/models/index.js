@@ -4,6 +4,7 @@ const AdSet = require('./AdSet');
 const Ad = require('./Ad');
 const Creative = require('./Creative');
 const ABTest = require('./ABTest');
+const Audience = require('./Audience');
 
 // Define associations
 Campaign.hasMany(AdSet, { foreignKey: 'campaign_id', as: 'adSets' });
@@ -24,5 +25,6 @@ module.exports = {
   AdSet,
   Ad,
   Creative,
-  ABTest
+  ABTest,
+  Audience
 };
