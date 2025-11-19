@@ -4,6 +4,7 @@ const AdSet = require('./AdSet');
 const Ad = require('./Ad');
 const Creative = require('./Creative');
 const ABTest = require('./ABTest');
+const BudgetAlert = require('./BudgetAlert');
 
 // Define associations
 Campaign.hasMany(AdSet, { foreignKey: 'campaign_id', as: 'adSets' });
@@ -18,11 +19,15 @@ Ad.belongsTo(Creative, { foreignKey: 'creative_id', as: 'creative' });
 Campaign.hasMany(ABTest, { foreignKey: 'campaign_id', as: 'abTests' });
 ABTest.belongsTo(Campaign, { foreignKey: 'campaign_id', as: 'campaign' });
 
+Campaign.hasMany(BudgetAlert, { foreignKey: 'campaign_id', as: 'budgetAlerts' });
+BudgetAlert.belongsTo(Campaign, { foreignKey: 'campaign_id', as: 'campaign' });
+
 module.exports = {
   sequelize,
   Campaign,
   AdSet,
   Ad,
   Creative,
-  ABTest
+  ABTest,
+  BudgetAlert
 };
