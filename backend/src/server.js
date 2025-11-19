@@ -8,6 +8,7 @@ require('dotenv').config();
 const config = require('./config/config');
 const { sequelize } = require('./models');
 const routes = require('./routes');
+require('./jobs/snapshotCollector');
 
 const app = express();
 
