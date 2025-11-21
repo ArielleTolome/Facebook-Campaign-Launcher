@@ -2,6 +2,16 @@
 
 A comprehensive Facebook Campaign Launcher for affiliate marketing, built with React, Node.js, and PostgreSQL.
 
+## 📚 Documentation
+
+- **[Feature Recommendations](FEATURE_RECOMMENDATIONS.md)** - Comprehensive analysis of 25+ potential features
+- **[Features Quick Reference](FEATURES_QUICK_REFERENCE.md)** - Top 10 features and quick implementation guide
+- **[API Documentation](API_DOCUMENTATION.md)** - Complete API reference
+- **[Audience System](AUDIENCE_API_DOCUMENTATION.md)** - Audience management API documentation
+- **[Quick Start Guide](QUICKSTART.md)** - Rapid setup instructions
+- **[Contributing Guide](CONTRIBUTING.md)** - Developer contribution guidelines
+- **[Changelog](CHANGELOG.md)** - Version history and updates
+
 ## Features
 
 - **Bulk Campaign Creation**: Create multiple campaigns simultaneously
